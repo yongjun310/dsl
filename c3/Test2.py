@@ -8,12 +8,16 @@ class Test2:
         num_inputs = 2
         num_examples = 1000
         true_w = [2, -3.4]
-        true_b = 14.2
+        true_b = 4.2
         features = nd.random.normal(scale=1, shape=(num_examples, num_inputs))
         labels = true_w[0]*features[:,0] + true_w[1] * features[:,1] + true_b
         labels += nd.random.normal(scale=0.01, shape=labels.shape)
         t.set_figsize()
         plt.scatter(features[:,1].asnumpy(), labels.asnumpy(), 1);
+        batch_size = 10
+        for X,y in t.data_iter(batch_size, features, labels):
+            print(X, y)
+            break
         
     def use_svg_display(self):
         display.set_matplotlib_formats('svg')
@@ -22,7 +26,7 @@ class Test2:
         self.use_svg_display()
         plt.rcParams['figure.figsize'] = figsize
     # 本函数已保存在d2lzh包中方便以后使用
-    def data_iter(batch_size, features, labels):
+    def data_iter(self,batch_size, features, labels):
         num_examples = len(features)
         indices = list(range(num_examples))
         random.shuffle(indices)  # 样本的读取顺序是随机的
