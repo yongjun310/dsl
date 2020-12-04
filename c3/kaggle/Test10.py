@@ -1,13 +1,13 @@
 import d2lzh as d2l
 from mxnet import autograd, gluon, init, nd
-from mxnet.gluon import data as gdata, loss as gloss, rnn
+from mxnet.gluon import data as gdata, loss as gloss, nn
 import numpy as np
 import pandas as pd
 # -*- coding: utf-8 -*-
 class Test10:
     loss = gloss.L2Loss()
     def get_net(self):
-        net = rnn.Sequential()
+        net = nn.Sequential()
         net.add(nn.Dense(1))
         net.initialize()
         return net
@@ -96,7 +96,7 @@ class Test10:
         train_features = nd.array(all_features[:n_train].values)
         test_features = nd.array(all_features[n_train:].values)
         train_labels = nd.array(train_data.SalePrice.values).reshape((-1, 1))
-        k, num_epochs, lr, weight_decay, batch_size = 5, 100, 36, 0, 64
+        k, num_epochs, lr, weight_decay, batch_size = 5, 100, 36, 0.1, 64
         train_l, valid_l = self.k_fold(k, train_features, train_labels, num_epochs, lr,
                                   weight_decay, batch_size)
         print('%d-fold validation: avg train rmse %f, avg valid rmse %f'
